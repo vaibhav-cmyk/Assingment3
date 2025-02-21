@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Traffic Light System</title>
+    <link icon="icon" href="icon.jpg" rel="shortcut icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            width: 400px;
+            color: white;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            background: #FFD700;
+            color: black;
+            font-weight: bold;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #28a745;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        .light {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: gray;
+            display: inline-block;
+            margin: 10px;
+        }
+        .green {
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Traffic Light System 🚦</h1><br>
+        <label for="trafficDensity">Select Traffic Density:</label><br><br>
+        <select id="trafficDensity">
+            <option value="Heavy Traffic">Heavy Traffic</option>
+            <option value="Moderate Traffic">Moderate Traffic</option>
+            <option value="Light Traffic">Light Traffic</option>
+        </select>
+        <button onclick="trafficLightControl()">Show Green Light Duration</button>
+        <div id="result"></div>
+        <div class="light" id="light"></div>
+    </div>
+    <script>
+        function trafficLightControl() {
+            let density = document.getElementById("trafficDensity").value;
+            let duration;
+            let light = document.getElementById("light");
+            
+            switch (density) {
+                case "Heavy Traffic":
+                    duration = 60;
+                    break;
+                case "Moderate Traffic":
+                    duration = 40;
+                    break;
+                case "Light Traffic":
+                    duration = 20;
+                    break;
+                default:
+                    duration = 0;
+            }
+            
+            document.getElementById("result").innerHTML = `Green light will stay ON for <strong>${duration} seconds</strong>`;
+            
+            light.classList.add("green");
+            setTimeout(() => {
+                light.classList.remove("green");
+            }, duration * 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Ticket Booking</title>
+    <link rel="icon" href="icon.jpg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            width: 400px;
+            color: white;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .radio-group {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #28a745;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✈️ Flight Ticket Booking ✈️</h1>
+        <label for="classType">Select Class Type:</label>
+        <select id="classType">
+            <option value="economy">Economy</option>
+            <option value="business">Business (+RS. 2000)</option>
+            <option value="first">First Class (+RS. 5000)</option>
+        </select>
+        
+        <label for="luggage">Enter Luggage Weight (kg):</label>
+        <input type="number" id="luggage" placeholder="Enter weight" required>
+        
+        <div class="radio-group">
+            <label><input type="radio" name="discount" value="student"> Student (15% off)</label>
+            <label><input type="radio" name="discount" value="senior"> Senior Citizen (10% off)</label>
+        </div>
+        
+        <button onclick="calculateFare()">Calculate Fare</button>
+        <div id="result"></div>
+    </div>
+    
+    <script>
+        function calculateFare() {
+            let baseFare = 3000;
+            let classType = document.getElementById("classType").value;
+            let luggageWeight = parseFloat(document.getElementById("luggage").value);
+            let discountType = document.querySelector('input[name="discount"]:checked');
+            
+            let extraCharge = 0;
+            if (classType === "business") extraCharge = 2000;
+            if (classType === "first") extraCharge = 5000;
+            
+            let luggageCharge = 0;
+            if (luggageWeight > 20) {
+                luggageCharge = Math.ceil((luggageWeight - 20) / 10) * 500;
+            }
+            
+            let totalFare = baseFare + extraCharge + luggageCharge;
+            
+            if (discountType) {
+                if (discountType.value === "student") {
+                    totalFare *= 0.85;
+                } else if (discountType.value === "senior") {
+                    totalFare *= 0.90;
+                }
+            }
+            
+            document.getElementById("result").innerHTML = `💰 Final Ticket Price: RS. ${totalFare.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

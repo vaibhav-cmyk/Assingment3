@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket Pricing</title>
+    <link icon="icon" href="icon.jpg" rel="shortcut icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            width: 400px;
+            color: white;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #28a745;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        .offers {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ddd;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Movie Ticket Pricing 🎟️</h1>
+        <div class="offers">
+            <p><strong>Standard Ticket Price: RS.1000</strong></p>
+            <p>🎭 Matinee Show (Before 5 PM) → 20% Discount</p>
+            <p>👴 Senior Citizens (Above 60) → 30% Discount</p>
+            <p>👶 Children (Below 12) → 40% Discount</p>
+        </div>
+        <label for="age">Enter Your Age:</label>
+        <input type="number" id="age" placeholder="Enter your age" required>
+        
+        <label for="showTime">Select Show Time:</label>
+        <select id="showTime">
+            <option value="10:00">10:00 AM - Morning Delight</option>
+            <option value="13:00">1:00 PM - Noon Special</option>
+            <option value="16:00">4:00 PM - Matinee Magic</option>
+            <option value="18:30">6:30 PM - Evening Bliss</option>
+            <option value="21:00">9:00 PM - Night Premiere</option>
+        </select>
+        
+        <button onclick="calculateTicketPrice()">Calculate Ticket Price</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function calculateTicketPrice() {
+            let age = parseInt(document.getElementById("age").value);
+            let showTime = document.getElementById("showTime").value;
+            let basePrice = 1000;
+            let totalDiscount = 0;
+            
+            if (age < 0 || age > 120 || isNaN(age)) {
+                document.getElementById("result").innerHTML = "⚠️ Please enter a valid age.";
+                return;
+            }
+            
+            let showHour = parseInt(showTime);
+            
+            if (showHour < 17) {
+                totalDiscount += 20; // Matinee discount for shows before 5 PM
+            }
+            if (age > 60) {
+                totalDiscount += 30; // Senior citizen discount
+            } 
+            if (age < 12) {
+                totalDiscount += 40; // Child discount
+            }
+            
+            if (totalDiscount > 100) {
+                totalDiscount = 100; // Prevent discount from exceeding 100%
+            }
+            
+            let finalPrice = basePrice - (basePrice * totalDiscount / 100);
+            
+            document.getElementById("result").innerHTML = `🎟️ Final Ticket Price: <strong>RS.${finalPrice}</strong>`;
+        }
+    </script>
+</body>
+</html>

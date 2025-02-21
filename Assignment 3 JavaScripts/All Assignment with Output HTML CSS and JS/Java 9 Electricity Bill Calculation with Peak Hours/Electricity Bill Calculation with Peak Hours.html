@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Bill Calculator</title>
+    <link rel="icon" href="icon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            width: 400px;
+            color: white;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #28a745;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Electricity Bill Calculator ⚡</h1>
+        <label for="units">Enter Units Consumed:</label>
+        <input type="number" id="units" placeholder="Enter units" required>
+        
+        <label for="timeOfDay">Select Time of Day:</label>
+        <select id="timeOfDay">
+            <option value="day">8 AM - 8 PM (Normal Hours)</option>
+            <option value="night">8 PM - 8 AM (Peak Hours)</option>
+        </select>
+        
+        <button onclick="calculateBill()">Calculate Bill</button>
+        <div id="result"></div>
+    </div>
+    
+    <script>
+        function calculateBill() {
+            let units = parseFloat(document.getElementById("units").value);
+            let timeOfDay = document.getElementById("timeOfDay").value;
+            
+            if (isNaN(units) || units < 0) {
+                document.getElementById("result").innerHTML = "⚠️ Please enter a valid number of units.";
+                return;
+            }
+            
+            let rate;
+            if (units < 100) {
+                rate = 20;
+            } else if (units <= 300) {
+                rate = 16;
+            } else {
+                rate = 14;
+            }
+            
+            if (timeOfDay === "night") {
+                rate *= 1.10; // 10% extra for peak hours
+            }
+            
+            let totalBill = units * rate;
+            document.getElementById("result").innerHTML = `💰 Total Electricity Bill: RS. ${totalBill.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

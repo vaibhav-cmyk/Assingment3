@@ -1,0 +1,109 @@
+<!-- fitness_membership.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Membership Plan</title>
+    <link rel="icon" href="icon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            width: 400px;
+            color: white;
+        }
+        h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 18px;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        select, input, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏋️‍♂️ Fitness Membership Plan 💪</h1>
+        <label>Select Membership Type:</label>
+        <select id="planType">
+            <option value="Basic">Basic - RS.2000/month (Gym Access)</option>
+            <option value="Premium">Premium - RS.5000/month (Gym + Trainer)</option>
+            <option value="VIP">VIP - RS.8000/month (Gym + Trainer + Diet Plan)</option>
+        </select>
+        
+        <label>Do you want a Personal Trainer?</label>
+        <select id="wantsTrainer">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        
+        <label>Do you want a Diet Plan?</label>
+        <select id="wantsDietPlan">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        
+        <button onclick="choosePlan()">Check Best Plan</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function choosePlan() {
+            let planType = document.getElementById("planType").value;
+            let wantsTrainer = document.getElementById("wantsTrainer").value;
+            let wantsDietPlan = document.getElementById("wantsDietPlan").value;
+            let bestPlan = "";
+            
+            if (wantsTrainer === "yes" && wantsDietPlan === "yes") {
+                bestPlan = "VIP - RS.8000/month (Gym + Trainer + Diet Plan)";
+            } else if (wantsTrainer === "yes") {
+                bestPlan = "Premium - RS.5000/month (Gym + Trainer)";
+            } else {
+                bestPlan = "Basic - RS.2000/month (Gym Access Only)";
+            }
+            
+            document.getElementById("result").innerHTML = `✅ Best Plan for You: <br> ${bestPlan}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Withdrawal System</title>
+    <link rel="icon" href="icon.webp" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 900px;
+            background: url('background.jpg') no-repeat center center/cover;
+            backdrop-filter: blur(5px);
+        }
+        .atm-container {
+            background: #222;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 380px;
+            color: white;
+            border: 5px solid #007bff;
+        }
+        h2 {
+            color: #00ffcc;
+            margin-bottom: 20px;
+        }
+        input {
+            margin: 10px 0;
+            padding: 15px;
+            width: 90%;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            background: #333;
+            color: white;
+        }
+        button {
+            margin: 10px 5px;
+            padding: 15px;
+            width: 90%;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #ffcc00;
+            color: black;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #ffdb4d;
+            transform: scale(1.05);
+        }
+        #message {
+            color: red;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="atm-container">
+        <h2>Welcome to Nepal SBI ATM</h2>
+        <div id="pin-entry">
+            <input type="password" id="enteredPin" placeholder="Enter PIN" required>
+            <button onclick="validatePin()">Enter</button>
+        </div>
+        <div id="options-menu" class="hidden">
+            <h3>Welcome, Sushil Panthi</h3>
+            <button onclick="checkBalance()">Check Balance</button>
+            <button onclick="showWithdrawMenu()">Withdraw Money</button>
+        </div>
+        <div id="amount-entry" class="hidden">
+            <input type="number" id="amount" placeholder="Enter amount" required>
+            <button onclick="withdrawMoney()">Withdraw</button>
+        </div>
+        <div id="confirmation" class="hidden">
+            <p id="confirmation-message"></p>
+            <button onclick="completeTransaction()">Confirm</button>
+        </div>
+        <p id="message"></p>
+    </div>
+    
+    <script>
+        let balance = 5000;
+        let pin = 1234;
+
+        function validatePin() {
+            let enteredPin = parseInt(document.getElementById("enteredPin").value);
+            if (enteredPin === pin) {
+                document.getElementById("pin-entry").classList.add("hidden");
+                document.getElementById("options-menu").classList.remove("hidden");
+                document.getElementById("message").innerText = "Welcome! Choose an option.";
+            } else {
+                document.getElementById("message").innerText = "Incorrect PIN. Please try again.";
+            }
+        }
+
+        function checkBalance() {
+            document.getElementById("message").innerText = `Your current balance is Rs. ${balance}`;
+        }
+
+        function showWithdrawMenu() {
+            document.getElementById("options-menu").classList.add("hidden");
+            document.getElementById("amount-entry").classList.remove("hidden");
+            document.getElementById("message").innerText = "Enter amount to withdraw.";
+        }
+
+        function withdrawMoney() {
+            let amount = parseInt(document.getElementById("amount").value);
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById("message").innerText = "Please enter a valid amount.";
+                return;
+            }
+            if (amount > balance) {
+                document.getElementById("message").innerText = "Insufficient Funds";
+            } else if (amount % 100 !== 0) {
+                document.getElementById("message").innerText = "Enter amount in multiples of 100";
+            } else {
+                document.getElementById("amount-entry").classList.add("hidden");
+                document.getElementById("confirmation").classList.remove("hidden");
+                document.getElementById("confirmation-message").innerText = `You are withdrawing Rs. ${amount}. Confirm?`;
+            }
+        }
+
+        function completeTransaction() {
+            let amount = parseInt(document.getElementById("amount").value);
+            balance -= amount;
+            document.getElementById("confirmation").classList.add("hidden");
+            document.getElementById("message").innerText = `Transaction successful! Remaining balance: Rs. ${balance}`;
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

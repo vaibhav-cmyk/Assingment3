@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Shopping Calculator</title>
+    <link icon="icon" href="icon.png" type="image/x-icon" rel="shortcut icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .offers {
+            background: #ffccbc;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .offers p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #ff5722;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #e64a19;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shopping Discount & Shipping Calculator</h1>
+        <div class="offers">
+            <p>🔹 20% off on orders above Rs. 10,000</p>
+            <p>🔹 10% off on orders between Rs. 5,000 and Rs. 10,000</p>
+            <p>🔹 No discount below Rs. 5,000</p>
+            <p>🚚 Free shipping for orders above Rs. 1,000</p>
+            <p>🚀 Express shipping (Rs. 100) for orders below Rs. 1,000</p>
+        </div>
+        <input type="number" id="orderAmount" placeholder="Enter Order Amount (Rs.)">
+        <button onclick="calculateFinalAmount()">Calculate</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function calculateFinalAmount() {
+            let orderAmount = parseFloat(document.getElementById("orderAmount").value);
+            let discount = 0;
+            let shipping = 0;
+            let resultDiv = document.getElementById("result");
+            
+            if (orderAmount > 10000) {
+                discount = orderAmount * 0.20;
+            } else if (orderAmount >= 5000) {
+                discount = orderAmount * 0.10;
+            }
+            
+            let discountedPrice = orderAmount - discount;
+            
+            if (orderAmount < 1000) {
+                shipping = 100;
+            }
+            
+            let finalAmount = discountedPrice + shipping;
+            resultDiv.innerHTML = `
+                <p>Discount Applied: <strong>Rs. ${discount.toFixed(2)}</strong></p>
+                <p>Shipping Charges: <strong>Rs. ${shipping.toFixed(2)}</strong></p>
+                <p style="font-size:18px; color:#d32f2f;">Final Payable Amount: <strong>Rs. ${finalAmount.toFixed(2)}</strong></p>`;
+        }
+    </script>
+</body>
+</html>

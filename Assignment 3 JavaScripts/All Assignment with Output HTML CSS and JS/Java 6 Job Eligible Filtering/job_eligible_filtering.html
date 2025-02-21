@@ -1,0 +1,111 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Filter</title>
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            width: 400px;
+            color: white;
+        }
+        h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💼 Job Application Filter 🏢</h1><br>
+        <label for="age">Enter Your Age:</label><br><br>
+        <input type="number" id="age" placeholder="Enter your age" required>
+        
+        <label for="experience">Enter Years of Experience:</label><br><br>
+        <input type="number" id="experience" placeholder="Years of experience" required>
+        
+        <label for="qualification">Select Qualification:</label><br><br>
+        <select id="qualification">
+            <option value="None">None</option>
+            <option value="High School">High School</option>
+            <option value="Bachelor's Degree">Bachelor's Degree</option>
+            <option value="Master's Degree">Master's Degree</option>
+            <option value="PhD">PhD</option>
+        </select>
+        
+        <button onclick="checkEligibility()">Check Eligibility</button><br>
+        <div id="result"></div>
+    </div>
+    <script>
+        function checkEligibility() {
+            let age = parseInt(document.getElementById("age").value);
+            let experience = parseInt(document.getElementById("experience").value);
+            let qualification = document.getElementById("qualification").value;
+            
+            if (age < 0 || age > 100 || isNaN(age)) {
+                document.getElementById("result").innerHTML = "⚠️ Please enter a valid age (0-100).";
+                return;
+            }
+            
+            if (experience < 0 || isNaN(experience)) {
+                document.getElementById("result").innerHTML = "⚠️ Please enter a valid experience (minimum 0).";
+                return;
+            }
+            
+            if (age >= 21 && age <= 55 && experience >= 2 && (qualification === "Bachelor's Degree" || qualification === "Master's Degree" || qualification === "PhD")) {
+                document.getElementById("result").innerHTML = "✅ Congratulations! You are eligible for the job.";
+            } else {
+                document.getElementById("result").innerHTML = "❌ Sorry, you do not meet the eligibility criteria.";
+            }
+        }
+    </script>
+</body>
+</html>
